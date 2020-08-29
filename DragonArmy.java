@@ -1,5 +1,3 @@
-package moreExercise;
-
 import java.util.*;
 
 public class DragonArmy {
