@@ -1,5 +1,3 @@
-package exam09;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
