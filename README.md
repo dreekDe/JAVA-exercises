@@ -1,2 +1,2 @@
-# JAVA-fundamentals
-taks
+# JAVA-exercises
+tasks
