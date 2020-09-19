@@ -1,0 +1,39 @@
+package ReGex;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+public class MessageDecrypter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String regex = "^(\\$|\\%)(?<tag>[A-Z][a-z]{2,})\\1:\\s{1}(?<group>\\[\\d+\\]\\|\\[\\d+\\]\\|\\[\\d+\\]\\|)$";
+        Pattern pattern = Pattern.compile(regex);
+
+        int count = Integer.parseInt(scanner.nextLine());
+
+        for (int i = 0; i < count; i++) {
+            Matcher matcher = pattern.matcher(scanner.nextLine());
+            if (matcher.find()) {
+                System.out.printf("%s: ",matcher.group("tag"));
+
+                List<String> current = Arrays.stream(matcher.group("group").split("[\\[\\]\\|\\s+]"))
+                      .collect(Collectors.toList());
+
+                for (int j = 0; j < current.size(); j++) {
+                    if (!current.get(j).equals("")){
+                        System.out.print((char)(Integer.parseInt(current.get(j))));
+                    }
+                }
+
+            }else{
+                System.out.print("Valid message not found!");
+            }
+            System.out.println();
+
+        }
+    }
+}
