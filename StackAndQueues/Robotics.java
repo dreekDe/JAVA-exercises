@@ -1,0 +1,79 @@
+package StackAndQueues;
+
+import java.util.*;
+
+public class Robotics {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] robots = scanner.nextLine().split(";");
+
+        Map<String, Integer> robotsByTime = getRobots(robots);
+        int[] timeToWork = new int[robotsByTime.size()];
+
+        String[] time = scanner.nextLine().split(":");
+        long totalTime = (Integer.parseInt(time[0]) * 3600) + (Integer.parseInt(time[1]) * 60) + (Integer.parseInt(time[2]));
+
+        ArrayDeque<String> products = getDeque(scanner);
+
+      while (!products.isEmpty()) {
+            String currProduct = products.poll();
+            totalTime++;
+
+            for (int robot = 0; robot <timeToWork.length; robot++) {
+                if(timeToWork[robot] > 0) {
+                    --timeToWork[robot];
+                }
+            }
+
+            boolean isTakeProduct = false;
+
+            for (int i = 0; i < timeToWork.length; i++) {
+                if (timeToWork[i] == 0) {
+
+                    int count = 0;
+                    for (Map.Entry<String, Integer> entry : robotsByTime.entrySet()) {
+                        if (count == i) {
+                            timeToWork[i] = entry.getValue();
+
+                            long takenHour = totalTime / 3600 % 24;
+                            long takenMinute = totalTime % 3600 / 60;
+                            long takenSeconds = totalTime % 60;
+                            System.out.printf("%s - %s [%02d:%02d:%02d]%n", entry.getKey(), currProduct, takenHour, takenMinute, takenSeconds);
+
+                            isTakeProduct = true;
+                            break;
+                        }
+                        count++;
+                    }
+                    break;
+                }
+            }
+            if (!isTakeProduct) {
+                products.offer(currProduct);
+            }
+        }
+    }
+
+    private static Map<String, Integer> getRobots(String[] robots) {
+        Map<String, Integer> robotsByTime = new LinkedHashMap<>();
+
+        for (String robot : robots) {
+            String[] currentRobo = robot.split("-");
+            robotsByTime.putIfAbsent(currentRobo[0], Integer.parseInt(currentRobo[1]));
+        }
+        return robotsByTime;
+    }
+
+    private static ArrayDeque<String> getDeque(Scanner scanner) {
+        ArrayDeque<String> products = new ArrayDeque<>();
+
+        String currentProduct = scanner.nextLine();
+
+        while (!"End".equals(currentProduct)) {
+            products.offer(currentProduct);
+            currentProduct = scanner.nextLine();
+        }
+        return products;
+    }
+}
