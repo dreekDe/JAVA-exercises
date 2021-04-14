@@ -6,6 +6,8 @@
 Палиндром а дума, която се чете еднакво, и отпред назад, и отзад напред.
 Пример: "madam", "kayak", "wow", "asdsa", "saippuakivikauppias", "tattarrattat" 
 */
+
+
 import java.util.*;
 
 public class task {
@@ -13,12 +15,11 @@ public class task {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        List<String> text = new ArrayList<>();
-       Collections.addAll(text, scanner.nextLine().toLowerCase().replaceAll("[^a-z ]", "").split("\\s+"));
-
+        List<String> words = new ArrayList<>();
+        Collections.addAll(words, scanner.nextLine().toLowerCase().replaceAll("[^a-z ]", "").split("\\s+"));
 
         TreeMap<Integer, String> palindromes = new TreeMap<>();
-        for (String word : text) {
+        for (String word : words) {
             if (word.length() > 1 && palindrome(word)) {
                 palindromes.putIfAbsent(word.length(), word);
             }
@@ -30,7 +31,6 @@ public class task {
             System.out.println(palindromes.get(palindromes.lastKey()));
         }
     }
-
 
     private static boolean palindrome(String word) {
         return word.equals(new StringBuilder(word).reverse().toString());
