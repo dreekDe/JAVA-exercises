@@ -6,9 +6,6 @@
 Палиндром а дума, която се чете еднакво, и отпред назад, и отзад напред.
 Пример: "madam", "kayak", "wow", "asdsa", "saippuakivikauppias", "tattarrattat" 
 */
-
-
-
 import java.util.*;
 
 public class task {
